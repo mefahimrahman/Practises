@@ -1,0 +1,51 @@
+;UVA 13012 - Identifying Tea
+;Author: Fahim Rahman
+
+INCLUDE EMU8086.INC
+.MODEL SMALL
+.STACK 100H
+.DATA 
+T DW ?
+I DW ?
+N DW ?
+C DW ?
+.CODE
+MAIN PROC
+    ;INITIALIZE DATA SEGMENT
+    MOV AX,@DATA
+    MOV DS,AX
+WHILELOOP:
+    CALL SCAN_NUM
+    MOV T,CX
+    PRINTN
+    MOV I,5    ;I=5
+    MOV N,0    ;N=0
+    
+INERWHILE:
+    MOV AX,I
+    CMP AX,0
+    JE PRINT   ;IF C==T
+    CALL SCAN_NUM
+    MOV C,CX
+    PRINTN
+    CMP CX,T
+    JNE AFTER
+    INC N
+AFTER:    
+    DEC I    ;I--
+    JMP INERWHILE        
+PRINT:
+    MOV AX,N
+    CALL PRINT_NUM    
+    PRINTN
+    JMP WHILELOOP
+   
+    ;RETURN TO DOS
+    MOV AH,4CH
+    INT 21H     
+         
+    MAIN ENDP
+    DEFINE_SCAN_NUM
+    DEFINE_PRINT_NUM
+    DEFINE_PRINT_NUM_UNS
+END MAIN 

@@ -1,0 +1,38 @@
+;UVA 12531 - Hours & Minutes
+;Author: Fahim Rahman
+
+INCLUDE EMU8086.INC
+.MODEL SMALL
+.STACK 100H
+.DATA
+.CODE
+MAIN PROC
+    ;INITIALIZE DATA SEGMENT
+    MOV AX,@DATA
+    MOV DS,AX
+WHILE:    
+    CALL SCAN_NUM 
+    PRINTN
+    AND DX,0
+    MOV AX,CX
+    MOV CX,6
+    DIV CX
+    CMP DX,0  ;IF INP%6==0
+    JE YP
+    ;ELSE
+    PRINTN "N"
+    JMP WHILE
+    
+YP:
+    PRINTN "Y"    
+   
+    JMP WHILE
+    ;RETURN TO DOS
+    MOV AH,4CH
+    INT 21H     
+         
+    MAIN ENDP
+    DEFINE_SCAN_NUM
+    DEFINE_PRINT_NUM
+    DEFINE_PRINT_NUM_UNS
+END MAIN 

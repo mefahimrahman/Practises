@@ -1,0 +1,33 @@
+;UVA 13059 - Tennis Championship
+;Author: Fahim Rahman
+
+INCLUDE EMU8086.INC
+.MODEL SMALL
+.STACK 100H
+.DATA
+N DW ?
+.CODE
+MAIN PROC
+    ;INITIALIZE DATA SEGMENT
+    MOV AX,@DATA
+    MOV DS,AX
+    
+WHILE:
+    CALL SCAN_NUM
+    MOV N,CX
+    PRINTN
+    MOV AX,N
+    SUB AX,1    ;N-1
+    CALL PRINT_NUM
+    PRINTN
+    JMP WHILE            
+   
+    ;RETURN TO DOS
+    MOV AH,4CH
+    INT 21H     
+         
+    MAIN ENDP
+    DEFINE_SCAN_NUM
+    DEFINE_PRINT_NUM
+    DEFINE_PRINT_NUM_UNS
+END MAIN 

@@ -1,0 +1,57 @@
+;UVA 11636 - Hello World
+;Author: Fahim Rahman
+
+
+INCLUDE EMU8086.INC
+.MODEL SMALL
+.STACK 100H
+.DATA
+LINE DW ?
+COPY DW ?
+N DW ?
+T DW 0
+.CODE
+MAIN PROC
+    ;INITIALIZE DATA SEGMENT
+    MOV AX,@DATA
+    MOV DS,AX
+WHILE:
+    CALL SCAN_NUM
+    MOV N,CX
+    PRINTN
+    CMP CX,0 ;IF N<0
+    JL EXIT
+    INC T
+    MOV LINE,1
+    MOV COPY,0
+INNERWHILE:
+    MOV AX,LINE
+    CMP AX,N
+    JGE PRINT
+    MOV BX,LINE
+    ADD BX,LINE
+    MOV LINE,BX ;LINE+=LINE
+    INC COPY     ;COPY+=1
+    JMP INNERWHILE
+    
+PRINT:
+    PRINT "Case "
+    MOV AX,T
+    CALL PRINT_NUM
+    PRINT ": "
+    MOV AX,COPY
+    CALL PRINT_NUM
+    PRINTN
+    JMP WHILE
+                   
+    
+EXIT:   
+    ;RETURN TO DOS
+    MOV AH,4CH
+    INT 21H     
+         
+    MAIN ENDP
+    DEFINE_SCAN_NUM
+    DEFINE_PRINT_NUM
+    DEFINE_PRINT_NUM_UNS
+END MAIN 

@@ -1,0 +1,48 @@
+;UVA 12917 - Prop Hunt
+;Author: Fahim Rahman
+
+INCLUDE EMU8086.INC
+.MODEL SMALL
+.STACK 100H
+.DATA
+H DW ?
+P DW ?
+O DW ?
+SUM DW ?
+.CODE
+MAIN PROC
+    ;INITIALIZE DATA SEGMENT
+    MOV AX,@DATA
+    MOV DS,AX
+
+WHILE:    
+    CALL SCAN_NUM
+    MOV P,CX
+    PRINTN
+    CALL SCAN_NUM
+    MOV H,CX
+    PRINTN
+    CALL SCAN_NUM
+    MOV O,CX
+    PRINTN
+    
+    MOV AX,H
+    ADD AX,P    ;H+P
+    CMP AX,O
+    JLE ELSE    ;IF AX<=0
+    PRINTN "Hunters win!"
+    JMP WHILE
+    
+ELSE:
+    PRINTN "Props win!"    
+   
+    JMP WHILE
+    ;RETURN TO DOS
+    MOV AH,4CH
+    INT 21H     
+         
+    MAIN ENDP
+    DEFINE_SCAN_NUM
+    DEFINE_PRINT_NUM
+    DEFINE_PRINT_NUM_UNS
+END MAIN 

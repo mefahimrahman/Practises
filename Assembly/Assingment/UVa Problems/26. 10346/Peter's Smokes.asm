@@ -1,0 +1,70 @@
+;UVA 10346 - Peter's Smoke
+;Author: Fahim Rahman
+
+INCLUDE EMU8086.INC
+.MODEL SMALL
+.STACK 100H
+.DATA
+N DW ?
+K DW ?
+S DW ?
+B DW ?
+TB DW ?
+R DW ?
+SUM DW ?
+.CODE
+MAIN PROC
+    ;INITIALIZE DATA SEGMENT
+    MOV AX,@DATA
+    MOV DS,AX
+WHILE:
+    CALL SCAN_NUM
+    MOV N,CX
+    PRINTN
+    CALL SCAN_NUM
+    MOV K,CX
+    PRINTN
+    MOV AX,N
+    MOV S,AX    ;S=N
+    MOV TB,0    ;TB=0
+ 
+    
+INNERWHILE:
+    MOV AX,S
+    CMP AX,K
+    JL PRINT
+    AND DX,0   ;CLEAR DX REG
+    MOV AX,S
+    MOV CX,K
+    DIV CX     ;S/K
+    MOV B,AX   ;B=S/K
+    MOV R,DX   ;B=S%K
+    MOV AX,B
+    ADD AX,R
+    MOV SUM,AX ;B+R
+    MOV AX,SUM
+    MOV S,AX   ;S=B+R
+    MOV AX,TB
+    ADD AX,B
+    MOV TB,AX  
+    JMP INNERWHILE  
+    
+
+PRINT:
+   MOV AX,N
+   ADD AX,TB   ;TB=TB+B
+   CALL PRINT_NUM
+   PRINTN
+   JMP WHILE
+    
+                
+EXIT:   
+    ;RETURN TO DOS
+    MOV AH,4CH
+    INT 21H     
+         
+    MAIN ENDP
+    DEFINE_SCAN_NUM
+    DEFINE_PRINT_NUM
+    DEFINE_PRINT_NUM_UNS
+END MAIN 

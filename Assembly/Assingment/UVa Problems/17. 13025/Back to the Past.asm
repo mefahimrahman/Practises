@@ -1,0 +1,20 @@
+;UVA 13025 - Back To the Past
+;Author: Fahim Rahman
+
+INCLUDE EMU8086.INC
+.MODEL SMALL
+.STACK 100H
+.CODE
+MAIN PROC 
+    ;JUST OUTPUT
+    PRINTN "May 29, 2013 Wednesday"
+    
+    ;RETURN TO DOS
+    MOV AH,4CH
+    INT 21H     
+         
+    MAIN ENDP
+    DEFINE_SCAN_NUM
+    DEFINE_PRINT_NUM
+    DEFINE_PRINT_NUM_UNS
+END MAIN 

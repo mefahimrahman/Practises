@@ -1,0 +1,47 @@
+;UVA 913 - Joana and The Odd Numbers
+;Author: Fahim Rahman
+
+INCLUDE EMU8086.INC
+
+.MODEL SMALL
+.STACK 100H
+.DATA
+N DW ?
+SUM DW ?
+ODD DW ?
+AD DW ?
+.CODE
+MAIN PROC
+    ;INITIALIZE DATA SEGMENT
+    MOV AX,@DATA
+    MOV DS,AX
+WHILELOOP:
+    CALL SCAN_NUM
+    MOV N,CX
+    PRINTN
+    
+    MOV AX,N
+    ADD AX,2 ;N+2
+    MOV AD,AX  ;AD=N+2
+    MOV AX,N
+    MOV CX,AD
+    MUL CX    ;N*(N+2)
+    MOV CX,2
+    DIV CX    ;(N*(N+2))/2
+    MOV ODD,AX
+    MOV CX,3
+    MUL CX    ;3*ODD
+    SUB AX,6  ;(3*ODD)-6
+    CALL PRINT_NUM
+    PRINTN
+    JMP WHILELOOP
+    
+    
+    ;RETURN TO DOS
+    MOV AH,4CH
+    INT 21H
+    MAIN ENDP
+    DEFINE_SCAN_NUM
+    DEFINE_PRINT_NUM
+    DEFINE_PRINT_NUM_UNS
+END MAIN

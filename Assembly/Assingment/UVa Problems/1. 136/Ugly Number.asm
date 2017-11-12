@@ -1,0 +1,47 @@
+;UVA 136 - Ugly Number
+;Author: Fahim Rahman
+ 
+
+;DEFINE LIBRARY FUNCTION
+INCLUDE EMU8086.INC 
+ 
+.MODEL SMALL
+.STACK 100H
+.CODE
+MAIN PROC
+    
+    
+    ;AS NUMBER IS LARGE TAKING THE
+    ;VALUE SEPERATELY         
+    MOV AX,8599
+    MOV BX,633
+    MOV DX,92
+    
+    ;PRINTING OUTPUT
+    PRINT "The 1500'th ugly number is "
+    ;PRINT 8599
+    CALL PRINT_NUM
+    ;TO AVOID OVERRIDE
+    PRINT ""
+    MOV AX,BX
+    ;PRINT 8599633
+    CALL PRINT_NUM
+    PRINT ""
+    MOV AX,DX
+    ;PRINT 859963392
+    CALL PRINT_NUM 
+    PRINTN
+   
+   
+    ;RETURN TO DOS
+    MOV AH,4CH
+    INT 21H 
+    
+    MAIN ENDP
+    
+    DEFINE_PRINT_NUM
+    DEFINE_PRINT_NUM_UNS  
+    DEFINE_SCAN_NUM 
+     
+         
+END MAIN 

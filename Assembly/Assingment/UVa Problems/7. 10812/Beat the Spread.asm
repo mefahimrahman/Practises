@@ -1,0 +1,90 @@
+;UVA 10812 - Beat The Speed
+;Author: Fahim Rahman
+
+INCLUDE EMU8086.INC
+
+.MODEL SMALL
+.STACK 100H
+.DATA
+TESTCASE DW ?
+I DW 1
+A DW ?
+B DW ?
+C DW ?
+D DW ?
+.CODE 
+MAIN PROC
+    ;INITIALIZE DATA SEGMENT
+    MOV AX,@DATA
+    MOV DS,AX
+    
+    ;SCAN TEST CASE
+    CALL SCAN_NUM
+    MOV TESTCASE,CX
+    PRINTN
+       
+    
+LOOOP:
+    ;1ST FOR LOOP
+    MOV AX,I
+    CMP AX,TESTCASE
+    JG EXIT    
+    ;SCAN A
+    CALL SCAN_NUM
+    MOV A,CX    ;SAVE
+    PRINTN
+    MOV AX,A
+    
+    ;SCAN B
+    CALL SCAN_NUM
+    MOV B,CX    ;SAVE
+    PRINTN
+    
+    ;IF B>A
+    CMP CX,A
+    JG IMPPRINT
+    ;ELSE
+    AND DX,0 ;CLEAR DX REG
+    MOV CL,2 ;TO DIVIDE 2
+    SUB AX,B ;AX=A-B
+    DIV CL   ;(A-B)/2
+    ;IF (A-B)%2==0
+    CMP DX,0 ;REMENDER IS IN DX
+    ;ELSE
+    JE ELSE
+    
+IMPPRINT:
+    PRINTN "impossible"
+    INC I   ;I++
+    JMP LOOOP    
+   
+ELSE:
+   MOV CL,2 ;TO DIVIDE 2
+   MOV AX,A ;TO SUBTRACT
+   SUB AX,B ;AX=A-B
+   DIV CL   ;(A-B)/2
+   MOV C,AX ;RESULT IN AX
+   ADD AX,B
+   MOV D,AX 
+   
+   MOV AX,D ;TO USE DEFAULT FUNCTION
+   CALL PRINT_NUM
+   PRINT " "
+   MOV AX,C ;TO USE DEFAULT FUNCTION
+   CALL PRINT_NUM
+   PRINTN   
+   INC I   ;I++
+   JMP LOOOP
+   
+EXIT:
+    ;EXIT TO DOS
+    MOV AH,4CH
+    INT 21H
+   
+   MAIN ENDP
+    DEFINE_SCAN_NUM
+    DEFINE_PRINT_NUM
+    DEFINE_PRINT_NUM_UNS
+END MAIN
+    
+    
